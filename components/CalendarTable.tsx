@@ -4,7 +4,7 @@ import { useMemo } from "react";
 import { buildCalendarRange } from "@/lib/dates";
 import { MEMBERS } from "@/lib/constants";
 import { usePractices } from "@/lib/usePractices";
-import { ROW_STATUS_DOT, ROW_STATUS_STYLES, rowStatusForCount } from "@/lib/rowColor";
+import { ROW_STATUS_DOT, rowStatusForCount, rowStatusStyle } from "@/lib/rowColor";
 import RoomSelect from "./RoomSelect";
 
 export default function CalendarTable() {
@@ -26,9 +26,10 @@ export default function CalendarTable() {
           return (
             <div
               key={day.id}
-              className={`glass-panel rounded-2xl border p-3 ${ROW_STATUS_STYLES[status]} ${
+              className={`glass-panel rounded-2xl border p-3 ${
                 day.isToday ? "ring-1 ring-brand-purple" : ""
               }`}
+              style={rowStatusStyle(status)}
             >
               <div className="mb-2 flex items-center justify-between">
                 <div>
@@ -79,9 +80,10 @@ export default function CalendarTable() {
               return (
                 <tr
                   key={day.id}
-                  className={`border-b border-white/5 ${ROW_STATUS_STYLES[status]} ${
+                  className={`border-b border-white/10 ${
                     day.isToday ? "outline outline-1 outline-brand-purple" : ""
                   }`}
+                  style={rowStatusStyle(status)}
                 >
                   <td className="whitespace-nowrap px-3 py-2 font-medium">{day.id}</td>
                   <td className="whitespace-nowrap px-3 py-2 capitalize text-white/70">{day.dayName}</td>
