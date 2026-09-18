@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import { buildCalendarRange } from "@/lib/dates";
 import { MEMBERS } from "@/lib/constants";
 import { usePractices } from "@/lib/usePractices";
@@ -11,6 +11,19 @@ import TimeInput from "./TimeInput";
 export default function CalendarTable() {
   const days = useMemo(() => buildCalendarRange(), []);
   const { entries, loading, setMember, setRoom, setTime } = usePractices();
+  const todayMobileRef = useRef<HTMLDivElement | null>(null);
+  const todayDesktopRef = useRef<HTMLTableRowElement | null>(null);
+  const hasScrolledRef = useRef(false);
+
+  useEffect(() => {
+    if (loading || hasScrolledRef.current) return;
+    hasScrolledRef.current = true;
+    const target =
+      todayDesktopRef.current && todayDesktopRef.current.offsetParent !== null
+        ? todayDesktopRef.current
+        : todayMobileRef.current;
+    target?.scrollIntoView({ block: "start" });
+  }, [loading]);
 
   return (
     <div className="space-y-2">
@@ -27,6 +40,7 @@ export default function CalendarTable() {
           return (
             <div
               key={day.id}
+              ref={day.isToday ? todayMobileRef : undefined}
               className={`glass-panel rounded-2xl border p-3 ${
                 day.isToday ? "ring-1 ring-brand-purple" : ""
               }`}
@@ -84,6 +98,7 @@ export default function CalendarTable() {
               return (
                 <tr
                   key={day.id}
+                  ref={day.isToday ? todayDesktopRef : undefined}
                   className={`border-b border-white/10 ${
                     day.isToday ? "outline outline-1 outline-brand-purple" : ""
                   }`}
