@@ -10,7 +10,6 @@ export default function Home() {
         <div className="shrink-0 pt-6 sm:pt-10">
           <header className="mb-6 flex flex-col gap-1">
             <h1 className="text-2xl font-bold tracking-tight sm:text-3xl">NBTC — Kalendarz prób</h1>
-            <p className="text-sm text-white/50">Ostatnie 5 dni i najbliższe 30 dni</p>
           </header>
 
           <section className="mb-6">

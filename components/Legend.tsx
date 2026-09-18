@@ -1,8 +1,8 @@
 export default function Legend() {
   const items = [
-    { color: "bg-brand-green", label: "4 osoby — próba idzie" },
-    { color: "bg-brand-yellow", label: "3 osoby" },
-    { color: "bg-brand-red", label: "2 osoby" },
+    { color: "bg-brand-green", label: "4 osoby — jest próba" },
+    { color: "bg-brand-yellow", label: "3 osoby — może być" },
+    { color: "bg-brand-red", label: "2/1 — nie uda się" },
   ];
   return (
     <div className="flex flex-wrap gap-3 text-xs text-white/60">
