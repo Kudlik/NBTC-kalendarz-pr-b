@@ -1,6 +1,7 @@
 import CalendarTable from "@/components/CalendarTable";
 import CtaBar from "@/components/CtaBar";
 import Legend from "@/components/Legend";
+import NextFullPractice from "@/components/NextFullPractice";
 import PasswordGate from "@/components/PasswordGate";
 
 export default function Home() {
@@ -10,6 +11,7 @@ export default function Home() {
         <div className="shrink-0 pt-6 sm:pt-10">
           <header className="mb-6 flex flex-col gap-1">
             <h1 className="text-2xl font-bold tracking-tight sm:text-3xl">NBTC — Kalendarz prób</h1>
+            <NextFullPractice />
           </header>
 
           <section className="mb-6">
