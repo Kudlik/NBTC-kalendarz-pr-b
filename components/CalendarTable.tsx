@@ -6,10 +6,11 @@ import { MEMBERS } from "@/lib/constants";
 import { usePractices } from "@/lib/usePractices";
 import { ROW_STATUS_DOT, rowStatusForCount, rowStatusStyle } from "@/lib/rowColor";
 import RoomSelect from "./RoomSelect";
+import TimeInput from "./TimeInput";
 
 export default function CalendarTable() {
   const days = useMemo(() => buildCalendarRange(), []);
-  const { entries, loading, setMember, setRoom } = usePractices();
+  const { entries, loading, setMember, setRoom, setTime } = usePractices();
 
   return (
     <div className="space-y-2">
@@ -20,7 +21,7 @@ export default function CalendarTable() {
       {/* Mobile: stacked cards */}
       <div className="flex flex-col gap-2 sm:hidden">
         {days.map((day) => {
-          const entry = entries[day.id] ?? { room: "", members: {} };
+          const entry = entries[day.id] ?? { room: "", time: "", members: {} };
           const count = MEMBERS.filter((m) => entry.members[m.key]).length;
           const status = rowStatusForCount(count);
           return (
@@ -38,7 +39,10 @@ export default function CalendarTable() {
                 </div>
                 <span className={`h-2.5 w-2.5 rounded-full ${ROW_STATUS_DOT[status]}`} />
               </div>
-              <RoomSelect value={entry.room} onChange={(v) => setRoom(day.id, v)} />
+              <div className="flex gap-2">
+                <RoomSelect value={entry.room} onChange={(v) => setRoom(day.id, v)} className="flex-1" />
+                <TimeInput value={entry.time} onChange={(v) => setTime(day.id, v)} />
+              </div>
               <div className="mt-3 grid grid-cols-4 gap-1 text-center">
                 {MEMBERS.map((m) => (
                   <label key={m.key} className="flex flex-col items-center gap-1 text-xs text-white/70">
@@ -74,7 +78,7 @@ export default function CalendarTable() {
           </thead>
           <tbody>
             {days.map((day) => {
-              const entry = entries[day.id] ?? { room: "", members: {} };
+              const entry = entries[day.id] ?? { room: "", time: "", members: {} };
               const count = MEMBERS.filter((m) => entry.members[m.key]).length;
               const status = rowStatusForCount(count);
               return (
@@ -87,8 +91,11 @@ export default function CalendarTable() {
                 >
                   <td className="whitespace-nowrap px-3 py-2 font-medium">{day.id}</td>
                   <td className="whitespace-nowrap px-3 py-2 capitalize text-white/70">{day.dayName}</td>
-                  <td className="min-w-[220px] px-3 py-2">
-                    <RoomSelect value={entry.room} onChange={(v) => setRoom(day.id, v)} />
+                  <td className="min-w-[280px] px-3 py-2">
+                    <div className="flex gap-2">
+                      <RoomSelect value={entry.room} onChange={(v) => setRoom(day.id, v)} className="flex-1" />
+                      <TimeInput value={entry.time} onChange={(v) => setTime(day.id, v)} />
+                    </div>
                   </td>
                   {MEMBERS.map((m) => (
                     <td key={m.key} className="px-3 py-2 text-center">

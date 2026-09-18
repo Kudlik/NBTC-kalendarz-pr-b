@@ -7,6 +7,7 @@ import { MemberKey } from "./constants";
 
 export interface PracticeEntry {
   room: string;
+  time: string;
   members: Partial<Record<MemberKey, boolean>>;
 }
 
@@ -27,6 +28,7 @@ export function usePractices() {
           const data = docSnap.data();
           next[docSnap.id] = {
             room: typeof data.room === "string" ? data.room : "",
+            time: typeof data.time === "string" ? data.time : "",
             members: data.members ?? {},
           };
         });
@@ -50,5 +52,9 @@ export function usePractices() {
     await setDoc(doc(db, COLLECTION, dateId), { room }, { merge: true });
   }
 
-  return { entries, loading, setMember, setRoom };
+  async function setTime(dateId: string, time: string) {
+    await setDoc(doc(db, COLLECTION, dateId), { time }, { merge: true });
+  }
+
+  return { entries, loading, setMember, setRoom, setTime };
 }
