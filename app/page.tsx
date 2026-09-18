@@ -6,21 +6,23 @@ import PasswordGate from "@/components/PasswordGate";
 export default function Home() {
   return (
     <PasswordGate>
-      <main className="mx-auto max-w-5xl px-3 py-6 sm:px-6 sm:py-10">
-        <header className="mb-6 flex flex-col gap-1">
-          <h1 className="text-2xl font-bold tracking-tight sm:text-3xl">NBTC — Kalendarz prób</h1>
-          <p className="text-sm text-white/50">Ostatnie 5 dni i najbliższe 30 dni</p>
-        </header>
+      <main className="mx-auto flex h-dvh max-w-5xl flex-col px-3 sm:px-6">
+        <div className="shrink-0 pt-6 sm:pt-10">
+          <header className="mb-6 flex flex-col gap-1">
+            <h1 className="text-2xl font-bold tracking-tight sm:text-3xl">NBTC — Kalendarz prób</h1>
+            <p className="text-sm text-white/50">Ostatnie 5 dni i najbliższe 30 dni</p>
+          </header>
 
-        <section className="mb-6">
-          <CtaBar />
-        </section>
+          <section className="mb-6">
+            <CtaBar />
+          </section>
 
-        <section className="mb-3">
-          <Legend />
-        </section>
+          <section className="mb-3">
+            <Legend />
+          </section>
+        </div>
 
-        <section>
+        <section className="min-h-0 flex-1 overflow-y-auto pb-6">
           <CalendarTable />
         </section>
       </main>

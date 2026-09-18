@@ -16,7 +16,7 @@ export const viewport: Viewport = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="pl">
-      <body className="min-h-screen bg-graphite-950 bg-frost-gradient bg-fixed text-white">
+      <body className="h-dvh overflow-hidden bg-graphite-950 bg-frost-gradient bg-fixed text-white">
         {children}
       </body>
     </html>
