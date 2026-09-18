@@ -7,6 +7,7 @@ import { usePractices } from "@/lib/usePractices";
 import { ROW_STATUS_DOT, rowStatusForCount, rowStatusStyle } from "@/lib/rowColor";
 import RoomSelect from "./RoomSelect";
 import TimeInput from "./TimeInput";
+import AddToCalendarButton from "./AddToCalendarButton";
 
 export default function CalendarTable() {
   const days = useMemo(() => buildCalendarRange(), []);
@@ -35,8 +36,10 @@ export default function CalendarTable() {
       <div className="flex flex-col gap-2 sm:hidden">
         {days.map((day) => {
           const entry = entries[day.id] ?? { room: "", time: "", members: {} };
-          const count = MEMBERS.filter((m) => entry.members[m.key]).length;
+          const presentMembers = MEMBERS.filter((m) => entry.members[m.key]);
+          const count = presentMembers.length;
           const status = rowStatusForCount(count);
+          const canAddToCalendar = count >= 3 && Boolean(entry.room) && Boolean(entry.time);
           return (
             <div
               key={day.id}
@@ -70,6 +73,15 @@ export default function CalendarTable() {
                   </label>
                 ))}
               </div>
+              {canAddToCalendar && (
+                <AddToCalendarButton
+                  dateId={day.id}
+                  time={entry.time}
+                  room={entry.room}
+                  memberNames={presentMembers.map((m) => m.label)}
+                  className="mt-3 w-full"
+                />
+              )}
             </div>
           );
         })}
@@ -88,13 +100,16 @@ export default function CalendarTable() {
                   {m.label}
                 </th>
               ))}
+              <th className="px-3 py-3 font-medium">Kalendarz</th>
             </tr>
           </thead>
           <tbody>
             {days.map((day) => {
               const entry = entries[day.id] ?? { room: "", time: "", members: {} };
-              const count = MEMBERS.filter((m) => entry.members[m.key]).length;
+              const presentMembers = MEMBERS.filter((m) => entry.members[m.key]);
+              const count = presentMembers.length;
               const status = rowStatusForCount(count);
+              const canAddToCalendar = count >= 3 && Boolean(entry.room) && Boolean(entry.time);
               return (
                 <tr
                   key={day.id}
@@ -122,6 +137,16 @@ export default function CalendarTable() {
                       />
                     </td>
                   ))}
+                  <td className="px-3 py-2">
+                    {canAddToCalendar && (
+                      <AddToCalendarButton
+                        dateId={day.id}
+                        time={entry.time}
+                        room={entry.room}
+                        memberNames={presentMembers.map((m) => m.label)}
+                      />
+                    )}
+                  </td>
                 </tr>
               );
             })}
